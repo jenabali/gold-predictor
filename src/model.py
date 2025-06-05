@@ -14,15 +14,20 @@ def evaluate_model(model, X, y):
     preds = model.predict(X)
     return accuracy_score(y, preds)
 
-def show_feature_importance(model):
-    """Display a bar chart of feature importances."""
+def show_feature_importance(model, X):
+    """Display a bar chart of feature importances with correct labels."""
     importance = model.feature_importances_
-    labels = [f"Candle{i+1}_{col}" for i in range(5) for col in ["Open", "High", "Low", "Close"]]
+    
+    # تعداد ویژگی‌ها و ساختن لیبل‌ها براساس آن
+    n_features = X.shape[1]
+    label_template = ["Open", "High", "Low", "Close"]
+    window = n_features // 4
+    labels = [f"Candle{i+1}_{col}" for i in range(window) for col in label_template]
 
     sorted_idx = np.argsort(importance)
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     plt.barh(np.array(labels)[sorted_idx], importance[sorted_idx])
-    plt.title("Feature Importance in Random Forest")
+    plt.title("📊 Feature Importance in Random Forest")
     plt.xlabel("Importance")
     plt.tight_layout()
     plt.show()
