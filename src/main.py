@@ -19,11 +19,11 @@ def main():
     print(f"✅ Training accuracy on historical data: {acc:.2%}")
 
     # ۵. پیش‌بینی کندل بعدی بر اساس آخرین ۵ کندل
-    last_five = df.tail(5)
-    feature = last_five[["open", "high", "low", "close"]].values.flatten().reshape(1, -1)
+   last_five = df.tail(5)
+    feature = last_five[["Open", "High", "Low", "Close"]].values.flatten().reshape(1, -1)
     prediction = model.predict(feature)[0]
     action = "BUY" if prediction == 1 else "SELL"
-    print(f"📈 Next candle prediction: {action}")
+    print(f"Next candle prediction: {action}")
 
     # ۶. نمایش اهمیت ویژگی‌ها در تصمیم‌گیری مدل
     show_feature_importance(model)
