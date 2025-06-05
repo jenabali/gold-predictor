@@ -1,5 +1,5 @@
 import pandas as pd
-from mt5_data import load_data
+from data import load_data
 from preprocessing import create_dataset
 from model import train_model, evaluate_model
 
