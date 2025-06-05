@@ -5,28 +5,28 @@ from model import train_model, evaluate_model, show_feature_importance
 
 
 def main():
-    # ۱. گرفتن داده‌های گذشته از MT5
+    # مرحله 1: دریافت داده‌ها
     df = load_data()
 
-    # ۲. آماده‌سازی داده برای مدل
+    # مرحله 2: ساخت دیتاست برای مدل
     X, y = create_dataset(df)
 
-    # ۳. آموزش مدل
+    # مرحله 3: آموزش مدل
     model = train_model(X, y)
 
-    # ۴. ارزیابی مدل روی دیتای تاریخی
+    # مرحله 4: ارزیابی دقت مدل روی داده‌های تاریخی
     acc = evaluate_model(model, X, y)
     print(f"✅ Training accuracy on historical data: {acc:.2%}")
 
-    # ۵. پیش‌بینی کندل بعدی بر اساس آخرین ۵ کندل
-   last_five = df.tail(5)
+    # مرحله 5: پیش‌بینی کندل بعدی با توجه به 5 کندل آخر
+    last_five = df.tail(5)
     feature = last_five[["Open", "High", "Low", "Close"]].values.flatten().reshape(1, -1)
     prediction = model.predict(feature)[0]
     action = "BUY" if prediction == 1 else "SELL"
-    print(f"Next candle prediction: {action}")
+    print(f"📈 Next candle prediction: {action}")
 
-    # ۶. نمایش اهمیت ویژگی‌ها در تصمیم‌گیری مدل
-    show_feature_importance(model)
+    # مرحله 6: نمایش اهمیت ویژگی‌ها
+    show_feature_importance(model, X)
 
 
 if __name__ == "__main__":
